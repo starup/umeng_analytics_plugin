@@ -12,6 +12,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
+  var _tdv;
 
   @override
   void initState() {
@@ -26,6 +27,9 @@ class _MyAppState extends State<MyApp> {
     );
 
     print('Umeng initialized.');
+
+    _tdv = await UmengAnalyticsPlugin.getTestDeviceInfo();
+    print('tdv=$_tdv');
 
     if (!mounted) {
       return;
@@ -44,7 +48,19 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+          child: Column(
+            children: <Widget>[
+              Text('Running on: $_platformVersion\n'),
+              Text('deviceInfo: $_tdv\n'),
+              FlatButton(
+                child: Text('click'),
+                onPressed: () {
+                  UmengAnalyticsPlugin.event('click', label: '测试点击');
+                },
+              ),
+            ],
+          ),
+          
         ),
       ),
     );

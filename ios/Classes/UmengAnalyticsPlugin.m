@@ -19,6 +19,8 @@
         [self pageEnd:call result:result];
     } else if ([@"event" isEqualToString:call.method]) {
         [self event:call result:result];
+    } else if ([@"eventMap" isEqualToString:call.method]) {
+        [self eventMap:call result:result];
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -63,6 +65,19 @@
         [MobClick event:eventId label:label];
     }
     
+    result([NSNumber numberWithBool:YES]);
+}
+
+- (void)eventMap:(FlutterMethodCall*)call result:(FlutterResult)result {
+    NSString* eventId = call.arguments[@"eventId"];
+    NSDictionary* map = call.arguments[@"map"];
+
+    if (map == nil) {
+        [MobClick event:eventId];
+    } else {
+        [MobClick event:eventId attributes:map];
+    }
+
     result([NSNumber numberWithBool:YES]);
 }
 

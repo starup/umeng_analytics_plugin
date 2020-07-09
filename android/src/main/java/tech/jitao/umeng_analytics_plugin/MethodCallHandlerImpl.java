@@ -4,6 +4,10 @@ import android.content.Context;
 
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
+import com.umeng.commonsdk.statistics.common.DeviceConfig;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -31,6 +35,12 @@ public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
                 break;
             case "event":
                 event(call, result);
+                break;
+            case "eventMap":
+                eventMap(call, result);
+                break;
+            case "getTestDeviceInfo":
+                getTestDeviceInfo(call, result);
                 break;
             default:
                 result.notImplemented();
@@ -98,5 +108,29 @@ public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
         MobclickAgent.onEvent(context, eventId, label);
 
         result.success(true);
+    }
+
+    private void eventMap(MethodCall call, MethodChannel.Result result) {
+        final String eventId = call.argument("eventId");
+        final Map<String, Object> map = call.argument("map");
+
+        MobclickAgent.onEventObject(context, eventId, map);
+
+        result.success(true);
+    }
+
+    public void getTestDeviceInfo(MethodCall call, MethodChannel.Result result){
+//        String[] deviceInfo = new String[2];
+        Map<String, String> deviceInfo = new HashMap<String,String>();
+        try {
+            if(context != null){
+                deviceInfo.put("device_id", DeviceConfig.getDeviceIdForGeneral(context));
+                deviceInfo.put("mac", DeviceConfig.getMac(context));
+//                deviceInfo[0] = DeviceConfig.getDeviceIdForGeneral(context);
+//                deviceInfo[1] = DeviceConfig.getMac(context);
+            }
+        } catch (Exception e){
+        }
+        result.success(deviceInfo);
     }
 }

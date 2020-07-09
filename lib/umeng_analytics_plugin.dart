@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -72,4 +73,21 @@ class UmengAnalyticsPlugin {
 
     return _channel.invokeMethod<bool>('event', map);
   }
+
+  static Future<bool> eventMap(String eventId, Map<String, String> params) async {
+    Map<String, dynamic> args = {
+      'eventId': eventId,
+      'map': params,
+    };
+
+    return _channel.invokeMethod<bool>('eventMap', args);
+  }
+
+  static Future<Map> getTestDeviceInfo() async {
+    if (Platform.isIOS) return null;
+    Map<String, dynamic> map = {};
+
+    return _channel.invokeMethod<Map>('getTestDeviceInfo', map);
+  }
+
 }
