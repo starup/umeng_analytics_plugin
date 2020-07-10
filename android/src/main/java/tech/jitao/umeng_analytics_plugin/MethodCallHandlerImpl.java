@@ -36,8 +36,8 @@ public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
             case "event":
                 event(call, result);
                 break;
-            case "eventMap":
-                eventMap(call, result);
+            case "eventObj":
+                eventObj(call, result);
                 break;
             case "getTestDeviceInfo":
                 getTestDeviceInfo(call, result);
@@ -110,7 +110,7 @@ public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
         result.success(true);
     }
 
-    private void eventMap(MethodCall call, MethodChannel.Result result) {
+    private void eventObj(MethodCall call, MethodChannel.Result result) {
         final String eventId = call.argument("eventId");
         final Map<String, Object> map = call.argument("map");
 

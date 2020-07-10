@@ -74,13 +74,13 @@ class UmengAnalyticsPlugin {
     return _channel.invokeMethod<bool>('event', map);
   }
 
-  static Future<bool> eventMap(String eventId, Map<String, String> params) async {
+  static Future<bool> eventObj(String eventId, Map<String, dynamic> params) async {
     Map<String, dynamic> args = {
       'eventId': eventId,
       'map': params,
     };
 
-    return _channel.invokeMethod<bool>('eventMap', args);
+    return _channel.invokeMethod<bool>('eventObj', args);
   }
 
   static Future<Map> getTestDeviceInfo() async {
