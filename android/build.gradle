@@ -28,6 +28,7 @@ android {
 
     defaultConfig {
         minSdkVersion 16
+        consumerProguardFiles 'consumer-proguard-rules.txt'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         ndk {
             abiFilters "armeabi-v7a","arm64-v8a"
